@@ -20,7 +20,7 @@ func Calculate(a, b float64, op string) (float64, error) {
 	}
 }
 
-func CalculateParalel(a, b float64, op string, ChanelFloat64 chan float64, ChanelError chan error) {
+func ParalelCalculate(a, b float64, op string, ChanelFloat64 chan float64, ChanelError chan error) {
 	var c float64
 
 	switch op {
