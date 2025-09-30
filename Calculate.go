@@ -38,6 +38,7 @@ func ParalelCalculate(a, b float64, op string, ChanelFloat64 chan float64, Chane
 		ChanelError <- nil
 	case "/":
 		if b == 0 {
+			ChanelFloat64 <- 0
 			ChanelError <- fmt.Errorf("division by zero")
 		}
 		c = a / b
