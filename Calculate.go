@@ -20,33 +20,48 @@ func Calculate(a, b float64, op string) (float64, error) {
 	}
 }
 
-func ParalelCalculate(a, b float64, op string, ChanelFloat64 chan float64, ChanelError chan error) {
+func ParalelCalculate(a, b float64, op string, ChanelCalculate chan struct {
+	Value float64
+	Err   error
+}) {
 	var c float64
 
 	switch op {
 	case "+":
 		c = a + b
-		ChanelFloat64 <- c
-		ChanelError <- nil
+		ChanelCalculate <- struct {
+			Value float64
+			Err   error
+		}{c, nil}
 	case "-":
 		c = a - b
-		ChanelFloat64 <- c
-		ChanelError <- nil
+		ChanelCalculate <- struct {
+			Value float64
+			Err   error
+		}{c, nil}
 	case "*":
 		c = a * b
-		ChanelFloat64 <- c
-		ChanelError <- nil
+		ChanelCalculate <- struct {
+			Value float64
+			Err   error
+		}{c, nil}
 	case "/":
 		if b == 0 {
-			ChanelFloat64 <- 0
-			ChanelError <- fmt.Errorf("division by zero")
+			ChanelCalculate <- struct {
+				Value float64
+				Err   error
+			}{0, fmt.Errorf("division by zero")}
+			return
 		}
 		c = a / b
-		ChanelFloat64 <- c
-		ChanelError <- nil
+		ChanelCalculate <- struct {
+			Value float64
+			Err   error
+		}{c, nil}
 	default:
-		ChanelFloat64 <- 0
-		ChanelError <- fmt.Errorf("unsupported operation: %s", op)
+		ChanelCalculate <- struct {
+			Value float64
+			Err   error
+		}{0, fmt.Errorf("unsupported operation: %s", op)}
 	}
-
 }
