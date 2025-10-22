@@ -70,6 +70,8 @@ func CalculateManyVar(a []float64, op string) (float64, error) {
 	var Result float64
 	var err error
 
+	Result = a[len(a)-1]
+	a = a[:len(a)-1]
 	for _, v := range a {
 		switch op {
 		case "+":
@@ -97,6 +99,8 @@ func ParalelCalculateManyVar(a []float64, op string, ChanelCalculate chan struct
 	Err   error
 }) {
 	var Result float64
+	Result = a[len(a)-1]
+	a = a[:len(a)-1]
 
 	for _, v := range a {
 		switch op {
